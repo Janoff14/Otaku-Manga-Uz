@@ -1,0 +1,14 @@
+{
+  "id": "parasyte",
+  "title": "Parasyte",
+  "description": "A mysterious parasite enters humanity. One boy survives—and must coexist with what lives inside him.",
+  "tags": ["Ongoing", "Horror", "Seinen"],
+  "chapters": [
+    {
+      "id": "ch1",
+      "title": "Chapter 1",
+      "pages": 17,
+      "date": "Jan 2026"
+    }
+  ]
+}

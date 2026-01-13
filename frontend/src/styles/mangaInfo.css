@@ -1,0 +1,159 @@
+.mangaInfoPage {
+  min-height: 100vh;
+  background: #090a0c;
+  color: white;
+}
+
+.mangaInfoMain {
+  padding: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.mangaInfoHero {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.mangaCoverWrap {
+  width: 100%;
+  border-radius: 20px;
+  border: 1px solid #222;
+  background: #0f1115;
+  overflow: hidden;
+  position: relative;
+}
+
+.mangaCoverImg {
+  width: 100%;
+  display: block;
+}
+
+.mangaCoverFallback {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #1a1f2a, #0b0d11);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.mangaMeta h1 {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 800;
+}
+
+.mangaTags {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.mangaTag {
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid #222;
+  background: #0f1115;
+  opacity: 0.85;
+  font-size: 12px;
+}
+
+.mangaDesc {
+  margin-top: 12px;
+  opacity: 0.6;
+  line-height: 1.5;
+  max-width: 720px;
+}
+
+.mangaActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+.mangaBtn {
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid #222;
+  background: #0f1115;
+  color: white;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.mangaBtnLink {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  font-weight: 700;
+}
+
+.chapterSection {
+  margin-top: 26px;
+  border-radius: 18px;
+  border: 1px solid #222;
+  background: #0f1115;
+  overflow: hidden;
+}
+
+.chapterHeader {
+  padding: 14px 16px;
+  border-bottom: 1px solid #222;
+  font-weight: 800;
+}
+
+.chapterList {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.chapterRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid #222;
+  background: #111;
+  text-decoration: none;
+  color: white;
+}
+
+.chapterTitle {
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.chapterRight {
+  opacity: 0.6;
+  font-size: 12px;
+}
+
+/* ✅ Mobile stacking to match your prototype */
+@media (max-width: 900px) {
+  .mangaInfoHero {
+    grid-template-columns: 1fr;
+  }
+
+  .mangaInfoMain {
+    padding: 16px;
+  }
+
+  .mangaMeta h1 {
+    font-size: 26px;
+  }
+
+  .mangaCoverWrap {
+    border-radius: 18px;
+  }
+}

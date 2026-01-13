@@ -1,0 +1,38 @@
+export const mangas = [
+  {
+    id: "parasyte",
+    title: "Parasyte",
+    genre: "Horror",
+    tag: "Sci-Fi",
+    hook: "Something is crawling inside humanity.",
+    status: "ongoing",
+    coverUrl: "/manga/parasyte/ch1/001.png",
+  },
+  {
+    id: "monster",
+    title: "Monster",
+    genre: "Thriller",
+    tag: "Seinen",
+    hook: "A doctor's choice leads to an unforgettable chain of events.",
+    status: "completed",
+    coverUrl: "",
+  },
+  {
+    id: "vagabond",
+    title: "Vagabond",
+    genre: "Historical",
+    tag: "Seinen",
+    hook: "A brutal journey toward mastery and meaning.",
+    status: "completed",
+    coverUrl: "",
+  },
+  {
+    id: "vinland-saga",
+    title: "Vinland Saga",
+    genre: "Action",
+    tag: "Drama",
+    hook: "A boy's revenge grows into a search for a true land of peace.",
+    status: "ongoing",
+    coverUrl: "",
+  },
+];
