@@ -1,0 +1,13 @@
+services:
+  db:
+    image: postgres:16
+    container_name: otaku-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: otaku_manga
+      POSTGRES_USER: otaku_user
+      POSTGRES_PASSWORD: otaku_db_pw123
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
