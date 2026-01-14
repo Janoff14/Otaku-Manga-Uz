@@ -3,11 +3,22 @@ from sqlalchemy.orm import Session
 from sqlalchemy import or_
 from typing import Optional
 from datetime import datetime
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
+import re
 
 from app.db.session import get_db
 from app.db.models.manga_model import Manga, Comment
 from app.schemas.manga_schema import MangaSummary, MangaDetail
+
+
+# --- Comment Validation Constants ---
+COMMENT_MIN_LENGTH = 2
+COMMENT_MAX_LENGTH = 2000
+URL_PATTERN = re.compile(
+    r'(https?://|www\.|[a-zA-Z0-9-]+\.(com|org|net|io|co|dev|app|xyz|info|biz|me))',
+    re.IGNORECASE
+)
+
 
 router = APIRouter(
     prefix="/api/v1/manga",
@@ -31,6 +42,30 @@ class LikeResponse(BaseModel):
 class CommentCreate(BaseModel):
     user_name: str = "Anonymous"
     text: str
+    # Honeypot field - if filled, likely a bot
+    website: Optional[str] = None
+
+    @field_validator('text')
+    @classmethod
+    def validate_text(cls, v: str) -> str:
+        v = v.strip()
+        if len(v) < COMMENT_MIN_LENGTH:
+            raise ValueError(f'Comment must be at least {COMMENT_MIN_LENGTH} characters')
+        if len(v) > COMMENT_MAX_LENGTH:
+            raise ValueError(f'Comment must not exceed {COMMENT_MAX_LENGTH} characters')
+        if URL_PATTERN.search(v):
+            raise ValueError('Links are not allowed in comments')
+        return v
+
+    @field_validator('user_name')
+    @classmethod
+    def validate_user_name(cls, v: str) -> str:
+        v = v.strip() if v else "Anonymous"
+        if len(v) > 50:
+            raise ValueError('Username must not exceed 50 characters')
+        if URL_PATTERN.search(v):
+            raise ValueError('Links are not allowed in username')
+        return v if v else "Anonymous"
 
 
 class CommentOut(BaseModel):
@@ -126,6 +161,18 @@ def create_manga_comment(
     comment_data: CommentCreate,
     db: Session = Depends(get_db),
 ):
+    # Honeypot check - if website field is filled, it's likely a bot
+    # Silently reject but return a fake success to confuse bots
+    if comment_data.website:
+        fake_comment = Comment(
+            id=0,
+            manga_id=0,
+            user_name=comment_data.user_name or "Anonymous",
+            text=comment_data.text,
+        )
+        fake_comment.created_at = datetime.now()
+        return fake_comment
+
     manga = db.query(Manga).filter(Manga.slug == slug).first()
     if not manga:
         raise HTTPException(status_code=404, detail="Manga not found")

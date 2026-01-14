@@ -20,7 +20,7 @@ async def lifespan(app: FastAPI):
     Base.metadata.create_all(bind=engine)
 
     # Only seed demo data in development
-    if not settings.is_production:
+    if settings.env == "dev":
         db = SessionLocal()
         try:
             if db.query(Manga).count() == 0:
