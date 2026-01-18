@@ -10,7 +10,7 @@ from app.db.base import Base
 import app.db.models  # noqa: F401
 
 from app.db.models.manga_model import Manga, Chapter, Page
-from app.routers import manga_routes, chapter_routes, progress_routes
+from app.routers import manga_routes, chapter_routes, progress_routes, admin_routes
 
 
 @asynccontextmanager
