@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
@@ -85,3 +86,9 @@ app.include_router(manga_routes.router)
 app.include_router(chapter_routes.router)
 app.include_router(progress_routes.router)
 app.include_router(admin_routes.router)
+
+# --- Launch week compatibility: serve /manga/catalog.json for frontend ---
+@app.get("/manga/catalog.json")
+def catalog_json():
+    # TODO: Replace with real data if needed
+    return JSONResponse({"items": []})
