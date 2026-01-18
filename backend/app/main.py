@@ -78,3 +78,4 @@ def db_health(db: Session = Depends(get_db)):
 app.include_router(manga_routes.router)
 app.include_router(chapter_routes.router)
 app.include_router(progress_routes.router)
+app.include_router(admin_routes.router)
