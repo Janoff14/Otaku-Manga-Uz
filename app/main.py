@@ -11,7 +11,7 @@ from app.core.config import settings
 import app.db.models  # noqa: F401
 
 from app.db.models.manga_model import Manga, Chapter, Page
-from app.routers import manga_routes, chapter_routes, progress_routes
+from app.routers import manga_routes, chapter_routes, progress_routes, admin_routes
 
 
 @asynccontextmanager
@@ -81,3 +81,4 @@ def db_health(db: Session = Depends(get_db)):
 app.include_router(manga_routes.router)
 app.include_router(chapter_routes.router)
 app.include_router(progress_routes.router)
+app.include_router(admin_routes.router)
