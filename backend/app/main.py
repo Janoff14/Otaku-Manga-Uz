@@ -6,6 +6,7 @@ from fastapi.responses import JSONResponse
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
+from app.core.config import settings
 from app.db.session import get_db, engine, SessionLocal
 from app.db.base import Base
 import app.db.models  # noqa: F401
@@ -80,6 +81,31 @@ def health_check():
 def db_health(db: Session = Depends(get_db)):
     result = db.execute(text("SELECT 1")).scalar()
     return {"db": "ok" if result == 1 else "bad"}
+
+
+@app.get("/manga/catalog.json")
+def catalog_json(db: Session = Depends(get_db)):
+    mangas = db.query(Manga).order_by(Manga.id.desc()).all()
+    items = []
+    for m in mangas:
+        chapters = (
+            db.query(Chapter)
+            .filter(Chapter.manga_id == m.id)
+            .order_by(Chapter.number.asc())
+            .all()
+        )
+        items.append({
+            "slug": m.slug,
+            "title": m.title,
+            "description": m.description,
+            "cover_url": m.cover_url,
+            "status": m.status,
+            "chapters": [
+                {"id": c.id, "number": c.number, "title": c.title}
+                for c in chapters
+            ],
+        })
+    return JSONResponse({"items": items})
 
 
 app.include_router(manga_routes.router)
