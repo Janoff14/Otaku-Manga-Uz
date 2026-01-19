@@ -1,9 +1,7 @@
-import { MANGA_BASE_URL } from "../config";
+import { API_BASE } from "../config";
 
 export async function loadMangaManifest(mangaId) {
-  const base = MANGA_BASE_URL ? `${MANGA_BASE_URL}` : "";
-  const url = `${base}/manga/${mangaId}/manifest.json`;
-
+  const url = `${API_BASE}/manga/${mangaId}/manifest.json`;
   const res = await fetch(url);
   if (!res.ok) throw new Error("Failed to load manifest");
   return res.json();
