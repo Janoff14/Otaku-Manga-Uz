@@ -62,6 +62,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "https://otaku-manga-uz-6.onrender.com",
+        "https://otaku-manga-uz-5.onrender.com",
         # keep local dev origins commonly used by the frontend
         "http://localhost:5173",
         "http://localhost:5174",
