@@ -57,13 +57,17 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Otaku Manga API", version="0.1.0", lifespan=lifespan)
 
+# Configure CORS: include deployed frontend origin(s) and local dev ports
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
+        "https://otaku-manga-uz-6.onrender.com",
+        # keep local dev origins commonly used by the frontend
         "http://localhost:5173",
         "http://localhost:5174",
         "http://localhost:5175",
         "http://localhost:5176",
+        # keep existing Render origin if still in use
         "https://otaku-manga-uz-4.onrender.com",
     ],
     allow_credentials=True,
@@ -112,9 +116,3 @@ app.include_router(manga_routes.router)
 app.include_router(chapter_routes.router)
 app.include_router(progress_routes.router)
 app.include_router(admin_routes.router)
-
-# --- Launch week compatibility: serve /manga/catalog.json for frontend ---
-@app.get("/manga/catalog.json")
-def catalog_json():
-    # TODO: Replace with real data if needed
-    return JSONResponse({"items": []})
